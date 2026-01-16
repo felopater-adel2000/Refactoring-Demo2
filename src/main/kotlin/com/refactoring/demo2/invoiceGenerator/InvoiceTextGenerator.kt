@@ -6,10 +6,7 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
 
         val loyaltyPoints = calculateLoyaltyPoints()
 
-        var totalCost = 0
-        for (item in order.shipmentItems) {
-            totalCost += calculateItemCost(item)
-        }
+        val totalCost = calculateTotalcost()
 
         var result = "Shipping Invoice for ${order.customerName}\n"
         for (item in order.shipmentItems) {
@@ -20,6 +17,14 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
         result += "You earned $loyaltyPoints loyalty points\n"
 
         return result
+    }
+
+    private fun calculateTotalcost(): Int {
+        var totalCost = 0
+        for (item in order.shipmentItems) {
+            totalCost += calculateItemCost(item)
+        }
+        return totalCost
     }
 
     private fun calculateLoyaltyPoints(): Int {
