@@ -1,4 +1,5 @@
 package com.refactoring.demo2.invoiceGenerator
 
-class InvoiceData {
-}
+data class InvoiceData(
+    val customerName: String
+)
