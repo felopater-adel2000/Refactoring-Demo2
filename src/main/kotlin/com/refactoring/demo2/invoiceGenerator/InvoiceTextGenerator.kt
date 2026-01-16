@@ -25,23 +25,20 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
         return result
     }
 
-    private fun string(invoiceLine: InvoiceLine): String = getInvoiceForLineItem(
-        itemCost = invoiceLine.itemCost,
-        itemQuantity = invoiceLine.itemQuantity,
-        itemWeight = invoiceLine.itemWeight,
-        productName = invoiceLine.productName
-    )
+    private fun string(invoiceLine: InvoiceLine): String =
+        "  ${
+            invoiceLine.productName
+        }: ${formatCurrency(amountInCents = invoiceLine.itemCost)} " +
+                "(${invoiceLine.itemQuantity} items, ${invoiceLine.itemWeight}kg)\n"
 
     fun generateHTML(): String {
 
         var result = "<Header>Shipping Invoice for ${order.customerName}\n"
         for (item in order.shipmentItems) {
-            result += getInvoiceForLineItem(
-                itemCost = calculateItemCost(item),
-                itemQuantity = item.quantity,
-                itemWeight = item.weight,
-                productName = getProduct(item).name
-            )
+            result += "  ${
+                getProduct(item).name
+            }: ${formatCurrency(amountInCents = calculateItemCost(item))} " +
+                    "(${item.quantity} items, ${item.weight}kg)\n"
         }
 
         result += "Total shipping cost is ${formatCurrency(calculateTotalcost())}\n"
@@ -67,16 +64,6 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
     }
 
     private fun getProduct(item: ShipmentItem): Product = products[item.productID]!!
-
-    private fun getInvoiceForLineItem(
-        itemCost: Int,
-        itemQuantity: Int,
-        itemWeight: Double,
-        productName: String
-    ): String {
-        return "  $productName: ${formatCurrency(itemCost)} " +
-                "($itemQuantity items, ${itemWeight}kg)\n"
-    }
 
     private fun calculateLoyaltyPointsIncrease(
         item: ShipmentItem
