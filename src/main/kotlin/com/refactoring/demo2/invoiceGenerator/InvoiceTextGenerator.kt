@@ -3,8 +3,9 @@ package com.refactoring.demo2.invoiceGenerator
 class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>) {
 
     fun generate(): String {
-
-        var result = "Shipping Invoice for ${order.customerName}\n"
+        val invoiceData = InvoiceData()
+        val customerName = order.customerName
+        var result = "Shipping Invoice for $customerName\n"
         for (item in order.shipmentItems) {
             result += getInvoiceForLineItem(calculateItemCost(item), item)
         }
@@ -72,6 +73,7 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
         val product = getProduct(item)
         var itemCost = 0
         when (product.shippingMethod) {
+
             "standard" -> {
                 itemCost = 500
                 if (item.weight > 5.0) {
