@@ -15,6 +15,19 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
         return result
     }
 
+    fun generateHTML(): String {
+
+        var result = "<Header>Shipping Invoice for ${order.customerName}\n"
+        for (item in order.shipmentItems) {
+            result += getInvoiceForLineItem(calculateItemCost(item), item)
+        }
+
+        result += "Total shipping cost is ${formatCurrency(calculateTotalcost())}\n"
+        result += "You earned ${calculateLoyaltyPoints()} loyalty points\n"
+
+        return result
+    }
+
     private fun calculateTotalcost(): Int {
         var totalCost = 0
         for (item in order.shipmentItems) {
