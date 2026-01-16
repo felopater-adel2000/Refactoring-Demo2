@@ -16,12 +16,7 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
                 itemWeight = item.weight,
                 productName = getProduct(item).name
             )
-            result += getInvoiceForLineItem(
-                itemCost = invoiceLine.itemCost,
-                itemQuantity = invoiceLine.itemQuantity,
-                itemWeight = invoiceLine.itemWeight,
-                productName = invoiceLine.productName
-            )
+            result += string(invoiceLine)
         }
 
         result += "Total shipping cost is ${formatCurrency(calculateTotalcost())}\n"
@@ -29,6 +24,13 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
 
         return result
     }
+
+    private fun string(invoiceLine: InvoiceLine): String = getInvoiceForLineItem(
+        itemCost = invoiceLine.itemCost,
+        itemQuantity = invoiceLine.itemQuantity,
+        itemWeight = invoiceLine.itemWeight,
+        productName = invoiceLine.productName
+    )
 
     fun generateHTML(): String {
 
