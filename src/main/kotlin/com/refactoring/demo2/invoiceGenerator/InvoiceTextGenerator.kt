@@ -3,8 +3,8 @@ package com.refactoring.demo2.invoiceGenerator
 class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>) {
 
     fun generate(): String {
-        val invoiceData = InvoiceData()
         val customerName = order.customerName
+        val invoiceData = InvoiceData()
         var result = "Shipping Invoice for $customerName\n"
         for (item in order.shipmentItems) {
             result += getInvoiceForLineItem(calculateItemCost(item), item)
