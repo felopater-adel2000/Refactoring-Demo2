@@ -9,7 +9,13 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
 
         for (item in order.shipmentItems) {
             loyaltyPoints += calculateLoyaltyPointsIncrease(item)
+        }
+
+        for (item in order.shipmentItems) {
             result += getInvoiceForLineItem(calculateItemCost(item), item)
+        }
+
+        for (item in order.shipmentItems) {
             totalCost += calculateItemCost(item)
         }
 
