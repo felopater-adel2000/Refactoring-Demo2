@@ -51,11 +51,14 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
     private fun getProduct(item: ShipmentItem): Product = products[item.productID]!!
 
     private fun getInvoiceForLineItem(
-        item: ShipmentItem
+        item: ShipmentItem,
     ): String {
         val itemCost = calculateItemCost(item)
-        return "  ${getProduct(item).name}: ${formatCurrency(itemCost)} " +
-                "(${item.quantity} items, ${item.weight}kg)\n"
+        val productName = getProduct(item).name
+        val itemQuantity = item.quantity
+        val itemWeight = item.weight
+        return "  $productName: ${formatCurrency(itemCost)} " +
+                "($itemQuantity items, ${itemWeight}kg)\n"
     }
 
     private fun calculateLoyaltyPointsIncrease(
