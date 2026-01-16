@@ -13,6 +13,9 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
+
+    //junit4
+    testImplementation("junit:junit:4.13.2")
 }
 
 tasks.test {
