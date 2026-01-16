@@ -3,20 +3,20 @@ package com.refactoring.demo2.invoiceGenerator
 class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>) {
 
     fun generate(): String {
-        var totalCost = 0
-        var loyaltyPoints = 0
-        var result = "Shipping Invoice for ${order.customerName}\n"
 
+        var loyaltyPoints = 0
         for (item in order.shipmentItems) {
             loyaltyPoints += calculateLoyaltyPointsIncrease(item)
         }
 
-        for (item in order.shipmentItems) {
-            result += getInvoiceForLineItem(calculateItemCost(item), item)
-        }
-
+        var totalCost = 0
         for (item in order.shipmentItems) {
             totalCost += calculateItemCost(item)
+        }
+
+        var result = "Shipping Invoice for ${order.customerName}\n"
+        for (item in order.shipmentItems) {
+            result += getInvoiceForLineItem(calculateItemCost(item), item)
         }
 
         result += "Total shipping cost is ${formatCurrency(totalCost)}\n"
