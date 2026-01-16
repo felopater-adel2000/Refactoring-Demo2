@@ -3,13 +3,14 @@ package com.refactoring.demo2.invoiceGenerator
 class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>) {
 
     fun generate(): String {
+        val invoiceLines = order.shipmentItems.map { getInvoiceLine(it) }
         val invoiceData = InvoiceData(
             customerName = order.customerName,
             loyaltyPoints = calculateLoyaltyPoints(),
-            totalCost = calculateTotalcost()
+            totalCost = calculateTotalcost(),
+            invoiceLines = invoiceLines
         )
         var result = "Shipping Invoice for ${invoiceData.customerName}\n"
-        val invoiceLines = order.shipmentItems.map { getInvoiceLine(it) }
         for (invoiceLine in invoiceLines) {
             result += getInvoiceForLineItem(invoiceLine)
         }
