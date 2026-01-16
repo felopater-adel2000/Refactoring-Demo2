@@ -1,4 +1,4 @@
-package com.example.demo.invoiceGenerator
+package com.refactoring.demo2.invoiceGenerator
 
 data class Order(
     val customerName: String,

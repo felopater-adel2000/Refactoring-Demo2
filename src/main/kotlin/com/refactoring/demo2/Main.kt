@@ -1,8 +1,6 @@
-package com.example.demo
+package com.refactoring.demo2
 
-/**
- * Main entry point for the application.
- */
+
 fun main() {
     println("Hello, Kotlin!")
     println("Welcome to the Refactoring Demo project!")

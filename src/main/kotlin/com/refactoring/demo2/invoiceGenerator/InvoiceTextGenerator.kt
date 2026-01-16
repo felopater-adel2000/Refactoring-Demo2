@@ -1,4 +1,4 @@
-package com.example.demo.invoiceGenerator
+package com.refactoring.demo2.invoiceGenerator
 
 class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>) {
 

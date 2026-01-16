@@ -1,9 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.9.21"
-    application
+    kotlin("jvm") version "2.2.21"
 }
 
-group = "com.example"
+group = "com.refactoring.demo2"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -11,21 +10,17 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
 
-    //junit4
+    // JUnit4
     testImplementation("junit:junit:4.13.2")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.0")
 }
 
 kotlin {
     jvmToolchain(17)
 }
 
-application {
-    mainClass.set("com.example.demo.MainKt")
+tasks.test {
+    useJUnitPlatform()
 }
