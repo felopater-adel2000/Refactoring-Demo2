@@ -9,8 +9,8 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
             totalCost = calculateTotalcost()
         )
         var result = "Shipping Invoice for ${invoiceData.customerName}\n"
-        for (item in order.shipmentItems) {
-            val invoiceLine = getInvoiceLine(item)
+        val invoiceLines = order.shipmentItems.map { getInvoiceLine(it) }
+        for (invoiceLine in invoiceLines) {
             result += getInvoiceForLineItem(invoiceLine)
         }
 
