@@ -9,7 +9,6 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
 
         for (item in order.shipmentItems) {
 
-            // get product
             val product = products[item.productID]!!
 
             var thisCost = 0
@@ -17,7 +16,6 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
             when (product.shippingMethod) {
                 "standard" -> {
                     thisCost = 500
-                    // extra
                     if (item.weight > 5.0) {
                         thisCost += (100 * (item.weight - 5.0)).toInt()
                     }
@@ -32,12 +30,8 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
                     thisCost += 150 * item.quantity
                 }
 
-//             "lowest_price" -> {
-//                 thisCost += 100 * item.quantity
-//            }
 
                 else -> {
-                    // should never happen
                     throw kotlin.IllegalArgumentException("unknown shipping method: ${product.shippingMethod}")
                 }
             }
@@ -47,10 +41,6 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
                 loyaltyPoints += item.quantity / 3
             }
 
-            // println("item: ${item}, cost: ${thisCost}, loyaltyPoints: ${loyaltyPoints}")
-            // each item should have 2 loyaltyPoints
-
-            // build output line
             result +=
                 "  ${product.name}: ${formatCurrency(thisCost)} " +
                         "(${item.quantity} items, ${item.weight}kg)\n"
@@ -65,7 +55,7 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
     }
 
     fun formatCurrency(amountInCents: Int): String {
-        // convert cents to dollars
-        return "$%.2f".format(amountInCents / 100.0)
+        val amountInDollars = amountInCents / 100.0
+        return "$%.2f".format(amountInDollars)
     }
 }

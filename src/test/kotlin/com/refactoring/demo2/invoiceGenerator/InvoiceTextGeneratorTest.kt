@@ -4,7 +4,9 @@ import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
-
+/**
+ * Written using Characterization testing approach
+ */
 class InvoiceTextGeneratorTest {
 
     @Test
@@ -17,8 +19,7 @@ class InvoiceTextGeneratorTest {
         )
 
         val order = Order(
-            customerName = "Acme Corp",
-            shipmentItems = listOf(
+            customerName = "Acme Corp", shipmentItems = listOf(
                 ShipmentItem("BOOK", 5, 4.9),
                 ShipmentItem("TABLE", 2, 5.1),
                 ShipmentItem("LAPTOP", 3, 2.9),
@@ -27,8 +28,7 @@ class InvoiceTextGeneratorTest {
         )
         val generator = InvoiceTextGenerator(order, products)
         val actualInvoiceText = generator.generate()
-        val expected =
-            """Shipping Invoice for Acme Corp
+        val expected = """Shipping Invoice for Acme Corp
   Programming Book: ${'$'}5.00 (5 items, 4.9kg)
   Long Table: ${'$'}5.09 (2 items, 5.1kg)
   Premium Laptop: ${'$'}16.50 (3 items, 2.9kg)
@@ -46,8 +46,7 @@ You earned 5 loyalty points
         )
 
         val order = Order(
-            customerName = "Acme Corp",
-            shipmentItems = listOf(
+            customerName = "Acme Corp", shipmentItems = listOf(
                 ShipmentItem("LAPTOP", 3, 8.5),
             )
         )
