@@ -102,12 +102,7 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
             }
 
             "express" -> {
-                itemCost = 1200
-                if (item.weight > 3.0) {
-                    itemCost += (250 * (item.weight - 3.0)).toInt()
-                }
-
-                itemCost += 150 * item.quantity
+                itemCost = calculateExpressShippingCost(itemCost, item)
             }
 
 
@@ -116,6 +111,17 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
             }
         }
         return itemCost
+    }
+
+    private fun calculateExpressShippingCost(itemCost: Int, item: ShipmentItem): Int {
+        var itemCost1 = itemCost
+        itemCost1 = 1200
+        if (item.weight > 3.0) {
+            itemCost1 += (250 * (item.weight - 3.0)).toInt()
+        }
+
+        itemCost1 += 150 * item.quantity
+        return itemCost1
     }
 
     private fun calculateStandardShippingCost(itemCost: Int, item: ShipmentItem): Int {
