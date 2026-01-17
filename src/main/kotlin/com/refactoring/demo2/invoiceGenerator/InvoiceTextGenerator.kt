@@ -93,25 +93,18 @@ class InvoiceTextGenerator(val order: Order, val products: Map<String, Product>)
     private fun calculateItemCost(
         item: ShipmentItem
     ): Int {
-        val product = getProduct(item)
-        var itemCost = 0
-        when (product.shippingMethod) {
+        return when (getProduct(item).shippingMethod) {
 
-            "standard" -> {
-                itemCost = calculateStandardShippingCost(item)
-            }
+            "standard" -> calculateStandardShippingCost(item)
 
-            "express" -> {
-                itemCost = calculateExpressShippingCost(item)
-            }
+            "express" -> calculateExpressShippingCost(item)
 
-
-            else -> {
-                throw kotlin.IllegalArgumentException("unknown shipping method: ${product.shippingMethod}")
-            }
+            else -> throw unknownShippingMethod(item)
         }
-        return itemCost
     }
+
+    private fun unknownShippingMethod(item: ShipmentItem): IllegalArgumentException =
+        IllegalArgumentException("unknown shipping method: ${getProduct(item).shippingMethod}")
 
     private fun calculateExpressShippingCost(item: ShipmentItem): Int {
         var itemCost = 1200
